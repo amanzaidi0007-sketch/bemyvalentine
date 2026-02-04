@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ragini ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MAIN CARD */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  width: 90%;
+  max-width: 360px;
+  z-index: 5;
+}
+
+h1 { color: #ff2e63; }
+p  { font-size: 18px; }
+
+button {
+  padding: 12px 26px;
+  margin: 10px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.yes { background: #ff2e63; color: white; }
+.no  { background: #eee; position: relative; }
+
+/* BACKGROUND HEARTS */
+.hearts span {
+  position: absolute;
+  bottom: -50px;
+  color: rgba(255,0,80,0.8);
+  animation: floatUp linear infinite;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+}
+
+/* HEART BURST */
+.burst {
+  position: fixed;
+  font-size: 30px;
+  animation: explode 1.4s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes explode {
+  from { transform: translate(0,0) scale(0.4); opacity: 1; }
+  to   { transform: translate(var(--x), var(--y)) scale(1.9); opacity: 0; }
+}
+
+/* MESSAGE BOX */
+.message-box {
+  position: fixed;
+  left: 50%;
+  bottom: -250px;
+  transform: translateX(-50%);
+  background: white;
+  padding: 32px;
+  border-radius: 26px;
+  text-align: center;
+  box-shadow: 0 35px 90px rgba(0,0,0,0.35);
+  animation: rise 1.6s cubic-bezier(0.19,1,0.22,1) forwards;
+  z-index: 10;
+}
+
+@keyframes rise {
+  to { bottom: 58%; }
+}
+
+/* ENVELOPE */
+.envelope {
+  position: fixed;
+  right: -280px;
+  top: 62%;
+  width: 230px;
+  height: 145px;
+  background: #ff2e63;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: center;
+  animation: slideSide 1.3s ease forwards;
+  z-index: 9;
+}
+
+@keyframes slideSide {
+  to { right: 30px; }
+}
+
+.envelope::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 115px solid transparent;
+  border-right: 115px solid transparent;
+  border-top: 75px solid #ff5c8a;
+}
+
+.envelope span {
+  color: white;
+  font-weight: bold;
+  line-height: 145px;
+}
+
+/* CENTER ENVELOPE */
+.envelope.center {
+  animation: toCenter 1s ease forwards;
+}
+
+@keyframes toCenter {
+  to {
+    right: 50%;
+    transform: translateX(50%);
+    top: 68%;
+  }
+}
+
+/* LETTER (ABSOLUTE + ABOVE ENVELOPE) */
+.letter {
+  position: absolute;
+  left: 50%;
+  bottom: 130px;
+  transform: translateX(-50%);
+  width: 260px;
+  background: white;
+  padding: 26px;
+  border-radius: 18px;
+  display: none;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+  animation: letterUp 1s ease forwards;
+}
+
+@keyframes letterUp {
+  from { transform: translate(-50%, 40px); opacity: 0; }
+  to   { transform: translate(-50%, 0); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts"></div>
+
+<div class="card" id="card">
+  <h1>Hey Ragini ❤️</h1>
+  <p id="text">I have a question for you.<br>Would you like to read it?</p>
+  <div id="buttons">
+    <button class="yes" onclick="start()">Yes 💌</button>
+    <button class="no" onclick="moveNo()">No 🙈</button>
+  </div>
+</div>
+
+<script>
+/* BACKGROUND HEARTS */
+const bg = document.querySelector('.hearts');
+setInterval(() => {
+  const h = document.createElement('span');
+  h.innerHTML = '❤️';
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.fontSize = Math.random()*30 + 16 + 'px';
+  h.style.animationDuration = Math.random()*6 + 7 + 's';
+  bg.appendChild(h);
+  setTimeout(() => h.remove(), 16000);
+}, 60);
+
+/* NO BUTTON */
+const noTexts = [
+  "No 😐","No 😕","No 🥺",
+  "Please 😔","Pretty please 🥹",
+  "Please na doll 💕","Pleasseeeee 😭"
+];
+let noCount = 0;
+
+function start() {
+  document.getElementById("text").innerHTML =
+    "Will you be my Valentine? 💘";
+  document.getElementById("buttons").innerHTML = `
+    <button class="yes" onclick="yes()">Yes 😍</button>
+    <button class="no" id="noBtn" onclick="moveNo()">No 🙈</button>
+  `;
+}
+
+function moveNo() {
+  const b = document.getElementById("noBtn");
+  b.style.transform =
+    `translate(${Math.random()*220-110}px,${Math.random()*220-110}px)`;
+  if (noCount < noTexts.length) b.innerText = noTexts[noCount++];
+}
+
+/* YES FLOW */
+let opened = false;
+
+function yes() {
+  heartBurst();
+
+  setTimeout(() => {
+    document.body.insertAdjacentHTML("beforeend", `
+      <div class="message-box">
+        <h1>❤️</h1>
+        <p>I knew it…<br>you will forever be my Valentine.</p>
+      </div>
+    `);
+  }, 500);
+
+  setTimeout(() => {
+    document.body.insertAdjacentHTML("beforeend", `
+      <div class="envelope" id="envelope" onclick="openEnvelope()">
+        <span>Click for surprise 💌</span>
+        <div class="letter" id="letter">
+          <h2>💖 Happy 46 months to us, doll 💖</h2>
+          <p>I love you. Always.</p>
+        </div>
+      </div>
+    `);
+  }, 2300);
+}
+
+/* HEART BURST */
+function heartBurst() {
+  for (let i = 0; i < 42; i++) {
+    const h = document.createElement("div");
+    h.className = "burst";
+    h.innerHTML = "❤️";
+    const a = Math.random() * 2 * Math.PI;
+    const d = Math.random() * 240 + 80;
+    h.style.left = "50%";
+    h.style.top = "50%";
+    h.style.setProperty("--x", Math.cos(a)*d + "px");
+    h.style.setProperty("--y", Math.sin(a)*d + "px");
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 1500);
+  }
+}
+
+/* ENVELOPE CLICK */
+function openEnvelope() {
+  if (opened) return;
+  opened = true;
+  const env = document.getElementById("envelope");
+  const letter = document.getElementById("letter");
+  env.classList.add("center");
+  setTimeout(() => letter.style.display = "block", 900);
+}
+</script>
+
+</body>
+</html>
+
+
